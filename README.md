@@ -1,3 +1,7 @@
+Here’s your updated `README.md` with the shell command integrated into the **Installation** section. I’ve added a step to run the `sed` command before building, ensuring the SDF paths are adjusted for the deploying user’s home directory. I’ve also made minor adjustments for clarity and consistency, keeping your structure intact.
+
+---
+
 # r550-ros-bot-humble
 
 ![r550 Simulation Success](https://github.com/910514/r550-ros-bot-humble/blob/main/images/r550_gazebo_humble.png)  
@@ -32,8 +36,6 @@ wheeltec_description/
 │   └── wheeltec/
 │       └── wheeltec.sdf         # SDF model for Gazebo simulation
 ├── package.xml                  # ROS 2 package manifest
-├── urdf/
-│   └── wheeltec.urdf            # URDF model for robot description
 └── worlds/
     └── wheeltec.world           # Gazebo world file
 ```
@@ -81,6 +83,7 @@ The r550 robot specifications are sourced from the official market listing on Ta
 To simplify emulation in ROS 2 Humble:
 - **Differential Drive Emulation**: The original r550 uses Mecanum wheels for omnidirectional movement, but due to the absence of a readily available `libgazebo_ros_mecanum_drive.so` plugin for ROS 2, this repo falls back to `libgazebo_ros_diff_drive.so`. This limits simulation to forward/backward and turning motion, omitting lateral strafing capabilities. Future updates may integrate a Mecanum plugin if sourced.
 - **Simplified Suspension**: The swing arm suspension is not modeled in the SDF/URDF, treating wheels as rigidly attached to the base for simulation simplicity.
+- **Absolute Paths**: The SDF uses absolute paths to meshes in `src/` for simplicity. A shell command is provided to adapt these paths for deployment on other systems.
 
 ---
 
@@ -91,23 +94,29 @@ To simplify emulation in ROS 2 Humble:
    mkdir -p ~/ros2_ws/src
    cd ~/ros2_ws/src
    git clone https://github.com/910514/r550-ros-bot-humble.git
-   mv ~/ros2_ws/src/r550-ros-bot-humble/wheeltec_description ~/ros2_ws/src/
-   sudo rm -dr ~/ros2_ws/src/r550-ros-bot-humble
+   mv r550-ros-bot-humble/wheeltec_description .
+   rm -rf r550-ros-bot-humble
    ```
 
-2. **Build with ROS 2 Humble**:
+2. **Update SDF Paths for Your System**:
+   - The SDF uses absolute paths specific to the original developer’s system (`/home/josh`). Run this command to replace them with your home directory:
+     ```bash
+     sed -i "s|/home/josh|$HOME|g" ~/ros2_ws/src/wheeltec_description/models/wheeltec/wheeltec.sdf
+     ```
+
+3. **Build with ROS 2 Humble**:
    ```bash
    cd ~/ros2_ws
    source /opt/ros/humble/setup.bash
    colcon build --symlink-install
    ```
 
-3. **Source the Workspace**:
+4. **Source the Workspace**:
    ```bash
    source install/setup.bash
    ```
 
-4. **Launch Simulation**:
+5. **Launch Simulation**:
    ```bash
    ros2 launch wheeltec_description wheeltec_gazebo.launch.py
    ```
