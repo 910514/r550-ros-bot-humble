@@ -90,7 +90,9 @@ To simplify emulation in ROS 2 Humble:
    ```bash
    mkdir -p ~/ros2_ws/src
    cd ~/ros2_ws/src
-   git clone https://github.com/<your-username>/r550-ros-bot-humble.git
+   git clone https://github.com/910514/r550-ros-bot-humble.git
+   mv ~/ros2_ws/src/r550-ros-bot-humble/wheeltec_description ~/ros2_ws/src/
+   sudo rm -dr ~/ros2_ws/src/r550-ros-bot-humble
    ```
 
 2. **Build with ROS 2 Humble**:
