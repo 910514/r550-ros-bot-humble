@@ -88,14 +88,16 @@ To simplify emulation in ROS 2 Humble:
 
 1. **Clone the Repository**:
    ```bash
+   mkdir -p ~/ros2_ws/src
+   cd ~/ros2_ws/src
    git clone https://github.com/<your-username>/r550-ros-bot-humble.git
-   cd r550-ros-bot-humble
    ```
 
 2. **Build with ROS 2 Humble**:
    ```bash
+   cd ~/ros2_ws
    source /opt/ros/humble/setup.bash
-   colcon build
+   colcon build --symlink-install
    ```
 
 3. **Source the Workspace**:
