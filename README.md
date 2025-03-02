@@ -1,7 +1,3 @@
-Here’s your updated `README.md` with the shell command integrated into the **Installation** section. I’ve added a step to run the `sed` command before building, ensuring the SDF paths are adjusted for the deploying user’s home directory. I’ve also made minor adjustments for clarity and consistency, keeping your structure intact.
-
----
-
 # r550-ros-bot-humble
 
 ![r550 Simulation Success](https://github.com/910514/r550-ros-bot-humble/blob/main/images/r550_gazebo_humble.png)  
